@@ -1,14 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { Children } from 'react'
+import React from 'react'
 
-const BaseElement = (props) => { 
-  return <div className="App">
+const WrapperDiv = (props) => { 
+  // Props => { pokemon, children, Camila ... }
+  const { pokemon, children } = props
+  return props.pokemon ? <div className="App">
   <header className="App-header">
-    HOME PAGE READY
-    {props.children}
+    Name: {pokemon.name}
+    Photo: {children}
   </header>
-</div>
+</div> : <div className="App">
+  <header className="App-header">SEM POKEMONS</header></div>
 }
 
 // REST API
@@ -21,40 +23,49 @@ const getRequestSample =  {
 
 function App() {
 
-  const [ pokemon, setPokemon ] = React.useState(``)
+  const [ pokemon, setPokemon ] = React.useState(``);
 
-  const onMount = () => {
+  const errorFunction = (e) => console.log(`Could not fetch pokemon, error: ${e}`)
+  const fetchPokemon = (pokemonName) => {
     console.log({ mingala: "noob"});
 
     // Todo request, deve aguardar um response
-    // Timeout === the server did not response 
-    fetch(`https://pokeapi.co/api/v2/pokemon/ditto`, getRequestSample) 
+    // Timeout === the server did not response
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`, getRequestSample) 
+    
     .then(res => {
-      console.log({ "response": res, });
       if ( res.status === 200 ) {
         return res.json(); // Reading the body stream response and returning it to the next level
       }
       throw "nao tem pokemon"
     }
     )
+
     .then(answer => {
       setPokemon(answer)
-    }).catch(e => console.log(`Could not fetch pokemon, error: ${e}`)).finally(() => { 
+    })
+    
+    .catch(errorFunction)
+    
+    .finally(() => { 
       console.log("Fetch end")
     });
   }
-
   
   // onMount useEffect to fetch the first page render
-  React.useEffect(onMount, [])
+  React.useEffect(() => {
+    fetchPokemon("dragonite")
+  }, [])
 
   return (
-    <BaseElement>
+    <WrapperDiv>
       <div>
         {pokemon && pokemon.sprites && pokemon.sprites.back_default && <img src={pokemon.sprites.back_default} />}
       </div>
-    </BaseElement>
+    </WrapperDiv>
   );
 }
+
 
 export default App;
