@@ -19,9 +19,14 @@ server.get('/', (request, response) => {
     response.send("Mingala é noubi");
 });
 
-server.get('/mingawa', (request, response) => {
-    // console.log({...request});
+server.get('/count', (x, response) => {
+    count++;
 
+    response.statusCode = 200;
+    response.send("Our current counting is: " + count);
+});
+
+server.get('/mingawa', (x, response) => {
     counter++;
 
     const answer = { pokemon: { name: "mingawa", weight: 304, height: 144, total: counter}};
