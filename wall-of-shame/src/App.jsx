@@ -6,6 +6,7 @@ import FButton from './components/fightbutton';
 import Container from './components/container';
 import Input from './components/input';
 import VS from './components/vsbutton';
+import LineChart from './components/LineChart';
 
 const BaseElement = (props) => {
   return <div className="App">
@@ -22,25 +23,33 @@ function App() {
     trainer: ''
   })
   const [textft, setTextft] = useState('')
+  const [winlose, setWinlose] = useState(
+    {
+      wildwin: 0,
+      trainerwin: 0
+    }
+  )
 
 
 
   return (
     <BaseElement >
-      <FButton set={setTextft} poke={pokemon} />
+
+      <FButton set={setTextft} poke={pokemon} track={setWinlose} pt={winlose} />
       <div className='con'>
         <Container pokemon={pokemon} />
-        <Text tft={textft} />
+        <div >
+          <Text tft={textft} wl={winlose} />
+
+
+        </div>
       </div>
       <div className='con'>
         <Input set={setPokeo} name={'wild'} />
         <VS pokeo={pokeo} setPokemon={setPokemon} />
         <Input set={setPokeo} name={'trainer'} />
       </div>
-
-
-
-
+      <LineChart winrate={winlose} />
     </BaseElement>
   );
 }

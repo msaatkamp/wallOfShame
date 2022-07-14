@@ -8,9 +8,18 @@ const Input = (p) => {
 
         e.preventDefault();
     }
-    return (<div>
+    if (p.name == 'wild') {
+        return (<div>
+            <input type="text" className='input'
+
+                placeholder='insert wild poke name'
+                onChange={handleNewPoke}
+            />
+        </div>);
+    } return (<div>
         <input type="text" className='input'
-            placeholder='insert wild poke name'
+
+            placeholder='insert your poke name'
             onChange={handleNewPoke}
         />
     </div>);
