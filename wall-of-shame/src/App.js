@@ -1,67 +1,68 @@
 import './App.css';
-import React from 'react'
+import React, { useState } from 'react'
 
 const WrapperDiv = (props) => { 
-  // Props => { pokemon, children, Camila ... }
-  const { pokemon, children } = props
-  return props.pokemon ? <div className="App">
+  return  <div className="App">
   <header className="App-header">
-    Name: {pokemon.name}
-    Photo: {children}
+    {props.children}
   </header>
-</div> : <div className="App">
-  <header className="App-header">SEM POKEMONS</header></div>
+</div> 
 }
 
 // REST API
 const getRequestSample =  { 
   method: 'GET',
   headers: new Headers(),
-  mode: 'cors',
   cache: 'default' 
 };
 
+const postRequestSample =  { 
+  method: 'POST',
+  cache: 'default' ,
+  headers: {
+    "Content-Type": "application/json",
+  credentials: "same-origin"
+  },
+};
+
 function App() {
+ 
+  const [ loading, setLoading ] = useState(true)
 
-  const [ pokemon, setPokemon ] = React.useState(``);
+  const fetchUrl = (url = "/mingawa", method = "GET", body = {}) => {
 
-  const errorFunction = (e) => console.log(`Could not fetch pokemon, error: ${e}`)
-  const fetchPokemon = (pokemonName) => {
-    console.log({ mingala: "noob"});
+  const post = {
+    ...postRequestSample,
+    body: JSON.stringify({ user: "Misawa", password: "podre"})
+  }
 
-    // Todo request, deve aguardar um response
-    // Timeout === the server did not response
-
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`, getRequestSample) 
-    
+  console.log({ post })
+  console.log({url})
+    fetch(url, method == "GET" ? getRequestSample : post)     
     .then(res => {
-      if ( res.status === 200 ) {
+      if ( res.ok ) {
         return res.json(); // Reading the body stream response and returning it to the next level
       }
-      throw "nao tem pokemon"
+      throw "URL nao encontrada"
     }
     )
-
     .then(answer => {
-      setPokemon(answer)
+      console.log({fromServer: answer})
+      setLoading(false)
     })
     
-    .catch(errorFunction)
-    
-    .finally(() => { 
-      console.log("Fetch end")
-    });
+    .catch(e => console.log({ error: e}))
   }
-  
+
   // onMount useEffect to fetch the first page render
   React.useEffect(() => {
-    fetchPokemon("dragonite")
+    fetchUrl("/register", "POST")
   }, [])
 
   return (
     <WrapperDiv>
       <div>
-        {pokemon && pokemon.sprites && pokemon.sprites.back_default && <img src={pokemon.sprites.back_default} />}
+        <h2>{loading ? "is loading, wait. . . " : " The application is ready"}</h2>
       </div>
     </WrapperDiv>
   );
