@@ -1,0 +1,52 @@
+.listelement {
+    background-color: #6975a865;
+    display: flex;
+    justify-items: baseline;
+    justify-content: baseline;
+    flex-direction: row;
+    margin: 10px;
+    border-color: #000000;
+    border-width: 2px;
+    padding: 5px;
+    flex-wrap: nowrap;
+    min-width: 400px;
+    min-height: 45px;
+}
+
+.access {
+    margin-left: 15px;
+    align-self: center;
+    justify-self: center;
+    margin-left: 5px;
+    margin-right: auto;
+    font-size: 2vh;
+}
+
+.deletebtn {
+    padding: 10;
+    margin-left: auto;
+    background-color: #910c0cf6;
+    color: #ffffff;
+    font-size: 8px;
+    margin-left: 5px;
+}
+
+.modalbtn {
+    justify-self: flex-end;
+    margin: 10;
+    padding: 10;
+    margin-left: auto;
+    margin-right: 0;
+    border-radius: 45%;
+    background-color: #140646c5;
+    color: #ffffff;
+    font-size: 8px;
+    min-width: 5%;
+}
+
+.username {
+    text-align: left;
+    margin-right: auto;
+    min-width: 180px;
+    font-size: 2vh;
+}

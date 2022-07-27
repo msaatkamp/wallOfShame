@@ -1,0 +1,11 @@
+.closebtn {
+    margin-left: 50%;
+    background-color: #970a0a65;
+}
+
+.input {
+    background-color: #6975a883;
+    border-color: #000000;
+    border-radius: 6px;
+    text-align: center;
+}
